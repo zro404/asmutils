@@ -1,13 +1,6 @@
 format elf64 executable
 entry main
 
-filename:
-    times 256 db 0
-
-buffer:
-    times 256 db 0
-    db 0ah
-
 main:
     mov rax, 2
     mov rdi, [rsp+16]
