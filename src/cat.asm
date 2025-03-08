@@ -1,12 +1,11 @@
 format elf64 executable
 entry main
 
+include 'lib/file.asm'
+
 main:
-    mov rax, 2
-    mov rdi, [rsp+16]
-    mov rsi, 0
-    mov rdx, 0
-    syscall
+    mov rax, [rsp+16]
+    call file_open_r
 
     mov rsi, rax
     mov rdi, 1

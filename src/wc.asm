@@ -1,6 +1,9 @@
 format elf64 executable
 entry main
 
+include 'lib/io.asm'
+include 'lib/file.asm'
+
 buffer:
     times 256 db 0
 
@@ -14,11 +17,8 @@ count:
 main:
     mov r10, 0
 
-    mov rax, 2
-    mov rdi, [rsp + 16]
-    mov rsi, 0
-    mov rdx, 0
-    syscall
+    mov rax, [rsp + 16]
+    call file_open_r
 
     mov [filedesc], al
 
@@ -68,14 +68,9 @@ print:
     add rax, '0'
     mov byte [count+r12], al
 
-    mov rax, 1
-    mov rdi, 1
-    mov rsi, count
-    mov rdx, 9
-    syscall
-    ;; dec r12
-    ;; cmp r12, 0
-    ;; jne print
+    mov rax, count
+    mov rdi, 9
+    call std_write
 
 exit:
     mov rax, 60

@@ -1,6 +1,8 @@
 format elf64 executable
 entry main
 
+include 'lib/io.asm'
+
 buffer:
     times 256 db 0
     db 0ah
@@ -11,12 +13,9 @@ main:
     mov rsi, 256
     syscall
 
-
-    mov rax, 1
-    mov rdi, 1
-    mov rsi, buffer
-    mov rdx, 257
-    syscall
+    mov rax, buffer
+    mov rdi, 257
+    call std_write
 
 exit:
     mov rax, 231
